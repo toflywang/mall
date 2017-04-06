@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.tofly.model.product">
+    <class name="ProductCategory" table="tb_productcategory">
+        <id name="id">
+            <generator class="native"/>
+        </id>
+        <property name="name" length="50" not-null="true"/>
+        <property name="level"/>
+        <set name="children" inverse="true" lazy="extra" cascade="all" order-by="id">
+            <key column="pid" />
+            <one-to-many class="ProductCategory"/>
+        </set>
+        <many-to-one name="parent" class="ProductCategory" column="pid"/>
+        <set name="products" inverse="true" lazy="extra">
+            <key column="categoryId" />
+            <one-to-many class="ProductInfo"/>
+        </set>
+    </class>
+</hibernate-mapping>

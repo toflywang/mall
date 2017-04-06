@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.tofly.model.order">
+    <class name="Order" table="tb_order">
+        <id name="orderId" type="java.lang.String" length="30">
+            <generator class="assigned"/>
+        </id>
+        <property name="name" not-null="true" length="50"/>
+        <property name="address" not-null="true" length="200"/>
+        <property name="mobile" not-null="true" length="11"/>
+        <property name="totolPrice"/>
+        <property name="createTime"/>
+        <property name="paymentWay" type="com.tofly.util.hibernate.PaymentWayType" length="15"/>
+        <property name="orderState" type="com.tofly.util.hibernate.OrderStateType" length="10"/>
+        <many-to-one name="customer" class="com.tofly.model.user.Customer" column="customerId"/>
+        <set name="orderItems" inverse="true" lazy="extra" cascade="all">
+            <key column="orderId"/>
+            <one-to-many class="OrderItem"/>
+        </set>
+    </class>
+</hibernate-mapping>
